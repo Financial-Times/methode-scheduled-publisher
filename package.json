@@ -1,0 +1,14 @@
+{
+  "name": "methodescheduledpublish",
+  "version": "1.0.0",
+  "description": "Methode Scheduled Publish",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrew Watkins and Ola Okejimi",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.81.0"
+  }
+}
