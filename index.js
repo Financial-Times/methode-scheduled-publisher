@@ -69,4 +69,6 @@ function main() {
     authenticateWithMethode().then(token => runQuery(token)); // authenticate with Methode, when finished, then run Query
 }
 
-exports.handler = module.exports = main()
+exports.handler =  main
+
+main()
