@@ -3,11 +3,11 @@ const ENVIRONMENT = 'local';
 const path = require("path");
 // const fs = require('fs');
 const request = require('request');
-const METHODE_QUERY_LOID = process.env.TEST_METHODE_QUERY_LOID;
-const METHODE_SWTTOKEN = process.env.TEST_METHODE_SWTTOKEN;
-const METHODE_USERNAME = process.env.TEST_METHODE_USER;
-const METHODE_PASSWORD = process.env.TEST_METHODE_PASSWORD;
-const METHODE_API_ROOTPATH = process.env.TEST_METHODE_API_ROOTPATH;
+const METHODE_QUERY_LOID = process.env.METHODE_QUERY_LOID;
+const METHODE_SWTTOKEN = process.env.METHODE_SWTTOKEN;
+const METHODE_USERNAME = process.env.METHODE_USERNAME;
+const METHODE_PASSWORD = process.env.METHODE_PASSWORD;
+const METHODE_API_ROOTPATH = process.env.METHODE_API_ROOTPATH;
 
 const baseRequest = request.defaults({
     headers: {'SWTToken': METHODE_SWTTOKEN, 'User-Agent': "nightingale"},
@@ -39,7 +39,7 @@ function authenticateWithMethode() {
 // need to stay on the same server, so keep the actual host in a cookie ft-backend-hostname=10_112_17_123
 function runQuery(token) {
     console.log("Run query start with token ",token);
-    baseRequest.post({url: '/query/search?id=116.0.3817745183&token=' + token, json: true, encoding: null}, function (err, res, body) {
+    baseRequest.post({url: '/query/search?id=' + METHODE_QUERY_LOID + '&token=' + token, json: true, encoding: null}, function (err, res, body) {
         console.log("before numstories");
         console.log(err);
         console.log(body);
