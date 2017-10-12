@@ -7,6 +7,11 @@ const METHODE_USERNAME = process.env.METHODE_USERNAME;
 const METHODE_PASSWORD = process.env.METHODE_PASSWORD;
 const METHODE_API_ROOTPATH = process.env.METHODE_API_ROOTPATH;
 
+const AWS = require('aws-sdk');
+
+const encrypted = process.env['METHODE_PASSWORD_ENCRYPTED'];
+let decrypted;
+
 const baseRequest = request.defaults({
     headers: {'SWTToken': METHODE_SWTTOKEN, 'User-Agent': "nightingale"},
     jar: true,
@@ -14,13 +19,13 @@ const baseRequest = request.defaults({
     followAllRedirects: true
 });
 
-function authenticateWithMethode() {
+function authenticateWithMethode(methodePassword) {
     console.log("Authenticating");
     return new Promise((resolve, reject) => {
         baseRequest.post('/auth/login', {
             form: {
                 username: METHODE_USERNAME,
-                pwd: METHODE_PASSWORD,
+                pwd: methodePassword,
                 connectionId: 'cms'
             }
         }, function (error,res,body) {
@@ -61,9 +66,21 @@ function runQuery(token) {
     })
 }
 
+function decryptPassword() {
+    console.log("Decrypting password");
+    return new Promise((resolve, reject) => {
+    const kms = new AWS.KMS();
+    kms.decrypt({ CiphertextBlob: new Buffer(encrypted, 'base64') }, (err, data) => {
+        resolve(data.Plaintext.toString('ascii'))
+        });
+    });
+}
+
 function main() {
     console.log("Starting Methode Automated Publisher");
-    authenticateWithMethode().then(token => runQuery(token)); // authenticate with Methode, when finished, then run Query
+    decryptPassword()
+    .then(authenticateWithMethode)
+    .then(token => runQuery(token)); // authenticate with Methode, when finished, then run Query
 }
 
 exports.handler =  main
