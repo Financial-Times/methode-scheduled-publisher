@@ -72,7 +72,11 @@ function decryptPassword(token) {
     return new Promise((resolve, reject) => {
         const kms = new AWS.KMS();
         kms.decrypt({ CiphertextBlob: new Buffer(encryptedPassword, 'base64') }, (err, data) => {
-            resolve({"password": data.Plaintext.toString('ascii'), "token": token})
+            if(err) {
+                reject(err)
+            } else {
+                resolve({"password": data.Plaintext.toString('ascii'), "token": token})
+            }
         });
     });
 }
@@ -84,7 +88,7 @@ function decryptToken() {
         kms.decrypt({ CiphertextBlob: new Buffer(encryptedToken, 'base64') }, (err, data) => {
             if(err) {
                 reject(err)
-            } else{
+            } else {
                 resolve(data.Plaintext.toString('ascii'))
             }
 
