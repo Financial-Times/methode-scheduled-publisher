@@ -1,9 +1,11 @@
+require('dotenv').config();
 const ENVIRONMENT = 'local';
 const path = require("path");
 const request = require('request');
 const METHODE_QUERY_LOID = process.env.METHODE_QUERY_LOID;
 const METHODE_USERNAME = process.env.METHODE_USERNAME;
 const METHODE_API_ROOTPATH = process.env.METHODE_API_ROOTPATH;
+
 
 const AWS = require('aws-sdk');
 
@@ -80,14 +82,18 @@ function decryptToken() {
     return new Promise((resolve, reject) => {
         const kms = new AWS.KMS();
         kms.decrypt({ CiphertextBlob: new Buffer(encryptedToken, 'base64') }, (err, data) => {
-            resolve(data.Plaintext.toString('ascii'))
+            if(err) {
+                reject(err)
+            } else{
+                resolve(data.Plaintext.toString('ascii'))
+            }
+
         });
     });
 }
 
 function main() {
     console.log("Starting Methode Automated Publisher");
-
     decryptToken()
         .then(decryptPassword)
         .then(setBaseRequest)
