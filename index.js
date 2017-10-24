@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const ENVIRONMENT = 'local';
 const path = require("path");
 const request = require('request');
