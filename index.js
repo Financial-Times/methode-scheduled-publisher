@@ -1,14 +1,11 @@
 // require('dotenv').config();
+const AWS = require('aws-sdk');
 const ENVIRONMENT = 'local';
 const path = require("path");
 const request = require('request');
 const METHODE_QUERY_LOID = process.env.METHODE_QUERY_LOID;
 const METHODE_USERNAME = process.env.METHODE_USERNAME;
 const METHODE_API_ROOTPATH = process.env.METHODE_API_ROOTPATH;
-
-
-const AWS = require('aws-sdk');
-
 const encryptedPassword = process.env['METHODE_PASSWORD_ENCRYPTED'];
 const encryptedToken= process.env['METHODE_SWTTOKEN_ENCRYPTED'];
 
