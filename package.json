@@ -4,11 +4,14 @@
   "description": "Methode Scheduled Publish",
   "main": "index.js",
   "scripts": {
+    "dev": "AWS_REGION=eu-west-1 node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Andrew Watkins and Ola Okejimi",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.138.0",
+    "dotenv": "^4.0.0",
     "request": "^2.81.0"
   }
 }
