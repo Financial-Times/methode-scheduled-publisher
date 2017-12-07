@@ -15,9 +15,9 @@ deployment:
   staging:
     branch: staging
     commands:
-     - ./sh/deploy.sh $AWSKEY_TEST $AWSSECRETKEY_TEST
+     - sh ./sh/deploy.sh $AWSKEY_TEST $AWSSECRETKEY_TEST
 
   production:
     branch: master
     commands:
-     - ./sh/deploy.sh $AWSKEY_PROD $AWSSECRETKEY_PROD
+     - sh ./sh/deploy.sh $AWSKEY_PROD $AWSSECRETKEY_PROD
