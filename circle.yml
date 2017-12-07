@@ -1,0 +1,23 @@
+machine:
+  node:
+    version: 4.3.0
+
+dependencies:
+  pre:
+    - rm -rf node_modules/
+    - pip install awscli
+
+test:
+  override:
+    - echo "done"
+
+deployment:
+  staging:
+    branch: staging
+    commands:
+     - ./sh/deploy.sh $AWSKEY_TEST $AWSSECRETKEY_TEST
+
+  production:
+    branch: master
+    commands:
+     - ./sh/deploy.sh $AWSKEY_PROD $AWSSECRETKEY_PROD
