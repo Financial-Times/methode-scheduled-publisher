@@ -4,8 +4,9 @@
   "description": "Methode Scheduled Publish",
   "main": "index.js",
   "scripts": {
-    "dev": "AWS_REGION=eu-west-1 node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "AWS_REGION=eu-west-1 node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "sh build.sh"
   },
   "author": "Andrew Watkins and Ola Okejimi",
   "license": "ISC",
