@@ -93,7 +93,7 @@ function decryptToken() {
     });
 }
 
-function main() {
+exports.handler = function main() {
     console.log("Starting Methode Automated Publisher");
     decryptToken()
         .then(decryptPassword)
@@ -101,8 +101,4 @@ function main() {
         .then(authenticateWithMethode)
         .then(token => runQuery(token)); // authenticate with Methode, when finished, then run Query
 
-}
-
-exports.handler =  main
-
-// main()
+};
