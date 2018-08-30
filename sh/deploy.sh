@@ -15,7 +15,5 @@ aws configure set aws_secret_access_key $2
 aws configure set default.region eu-west-1
 aws configure set default.output json
 
-npm run pack
-
 # Upload the lamdba job
 aws lambda update-function-code --function-name methodeScheduledPublish --zip-file fileb:///home/ubuntu/methode-scheduled-publisher/${FILE_NAME}
