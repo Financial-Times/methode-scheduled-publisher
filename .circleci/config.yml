@@ -1,9 +1,9 @@
 references:
 
-  container_config_aws_cli: &container_config_aws_cli
+  container_config_node6: &container_config_node6
     working_directory: ~/project/build
     docker:
-      - image: mesosphere/aws-cli
+      - image: circleci/node:6.10
 
   container_config_lambda_node6: &container_config_lambda_node6
     working_directory: ~/project/build
@@ -66,14 +66,16 @@ jobs:
             - build
 
   deploy-staging:
-    <<: *container_config_aws_cli
-#    environment:
-#      AWS_ACCESS_KEY_ID: ??
-#      AWS_SECRET_ACCESS_KEY: ??
-#      AWS_DEFAULT_REGION: eu-west-1
+    <<: *container_config_node6
     steps:
       - *attach_workspace
-      - add_ssh_keys
+      - run:
+          name: Install AWS CLI
+          command: |
+              sudo apt-get update -y
+              sudo apt-get install -y python-pip python-dev build-essential
+              sudo pip install --upgrade pip
+              sudo pip install awscli --upgrade
       - run:
           name: Run deploy script
           command: bash sh/deploy.sh $AWSKEY_TEST $AWSSECRETKEY_TEST
@@ -92,7 +94,3 @@ workflows:
       - deploy-staging:
           requires:
             - build
-
-notify:
-  webhooks:
-    - url: https://ft-next-webhooks.herokuapp.com/circleci2-workflow

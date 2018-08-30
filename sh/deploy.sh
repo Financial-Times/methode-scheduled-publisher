@@ -5,10 +5,6 @@ PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $
 MODULE_NAME=$(cat package.json | grep name | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
 FILE_NAME=${MODULE_NAME}-${PACKAGE_VERSION}.zip
 
-# Tag the successful builds for staging and master
-git tag ${PACKAGE_VERSION}
-git push origin ${PACKAGE_VERSION}
-
 # Set aws keys to deploy assets
 aws configure set aws_access_key_id $1
 aws configure set aws_secret_access_key $2
