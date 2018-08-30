@@ -12,4 +12,4 @@ aws configure set default.region eu-west-1
 aws configure set default.output json
 
 # Upload the lamdba job
-aws lambda update-function-code --function-name methodeScheduledPublish --zip-file fileb:///home/ubuntu/methode-scheduled-publisher/${FILE_NAME}
+aws lambda update-function-code --function-name methodeScheduledPublish --zip-file fileb:///home/circleci/project/build/${FILE_NAME}
