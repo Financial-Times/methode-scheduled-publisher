@@ -80,7 +80,20 @@ jobs:
           name: Run deploy script
           command: bash sh/deploy.sh $AWSKEY_TEST $AWSSECRETKEY_TEST
 
-  # $AWSKEY_PROD $AWSSECRETKEY_PROD
+  deploy-production:
+    <<: *container_config_node6
+    steps:
+      - *attach_workspace
+      - run:
+          name: Install AWS CLI
+          command: |
+              sudo apt-get update -y
+              sudo apt-get install -y python-pip python-dev build-essential
+              sudo pip install --upgrade pip
+              sudo pip install awscli --upgrade
+      - run:
+          name: Run deploy script
+          command: bash sh/deploy.sh $AWSKEY_PROD $AWSSECRETKEY_PROD
 
 workflows:
 
@@ -92,5 +105,14 @@ workflows:
           filters:
             <<: *filters_only_staging
       - deploy-staging:
+          requires:
+            - build
+
+  build-deploy-production:
+    jobs:
+      - build:
+          filters:
+            <<: *filters_only_master
+      - deploy-production:
           requires:
             - build
